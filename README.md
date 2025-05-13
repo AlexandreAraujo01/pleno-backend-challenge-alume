@@ -10,6 +10,7 @@ Este é um projeto de desafio técnico backend usando Node.js, Prisma e TypeScri
 
 ```bash
 pnpm install
+npx prisma generate
 npx prisma migrate dev
 pnpm run start:dev
 
