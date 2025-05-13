@@ -3,7 +3,7 @@ import { Student, StudentProps } from "../../domain/entites/student";
 import { StudentRepository } from "../../domain/repositories/user-repository";
 
 export class InMemoryStudentRepository implements StudentRepository {
-    constructor(public items: Student[] = []) {}
+    public items: Student[] = []
 
     async create(student: Student): Promise<void> {
         this.items.push(student)
@@ -27,6 +27,7 @@ export class InMemoryStudentRepository implements StudentRepository {
 
     async update({ email, name, lastName, password }: Partial<StudentProps>, id: UniqueEntityID): Promise<Student | null> {
         const student = await this.findById(id)
+        const studentIndex = this.items.findIndex((item) => item.id.equals(id))
         if(!student){
             return null
         }
@@ -47,6 +48,7 @@ export class InMemoryStudentRepository implements StudentRepository {
             student.password = password
         }
 
+        this.items[studentIndex] = student
         return student
         
     }

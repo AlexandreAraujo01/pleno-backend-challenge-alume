@@ -2,17 +2,20 @@ import Fastify from 'fastify';
 import { env } from './env';
 import fastifyJwt from '@fastify/jwt';
 import { studentRoutes } from './infra/http/controllers/students/routes';
+import { fundingRoutes } from './infra/http/controllers/fundings/routes';
 
 const fastify = Fastify({
   logger: true,
 });
 
+// JWT
 fastify.register(fastifyJwt, {
   secret: env.JWT_SECRET,
 });
 
-// Registre as rotas
+// Rotas
 fastify.register(studentRoutes)
+fastify.register(fundingRoutes)
 
 
 

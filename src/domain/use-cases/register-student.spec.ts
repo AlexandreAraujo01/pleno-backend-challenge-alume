@@ -16,14 +16,14 @@ describe('Register Student Use Case', () => {
 
     it('should be able to create a new student account', async () => {
         const response = await sut.execute({name: 'John', email: 'johndoe@example.com', lastName: 'Doe', password: '123456'})
-        expect(response.isRight())
+        expect(response.isRight()).toBe(true)
         expect(studentRepository.items[0].email).toEqual('johndoe@example.com')
         
     })
 
     it('should hash password upon registration', async () => {
         const response = await sut.execute({name: 'John', email: 'johndoe@example.com', lastName: 'Doe', password: '123456'})
-        expect(response.isRight())
+        expect(response.isRight()).toBe(true)
         expect(studentRepository.items[0].password).toEqual('123456-hashed')
     })
 

@@ -129,6 +129,15 @@ exports.Prisma.StudentScalarFieldEnum = {
   created_at: 'created_at'
 };
 
+exports.Prisma.FundingScalarFieldEnum = {
+  id: 'id',
+  studentId: 'studentId',
+  total_value: 'total_value',
+  installment_quantity: 'installment_quantity',
+  monthly_interest: 'monthly_interest',
+  monthly_installment_amount: 'monthly_installment_amount'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -141,7 +150,8 @@ exports.Prisma.QueryMode = {
 
 
 exports.Prisma.ModelName = {
-  Student: 'Student'
+  Student: 'Student',
+  Funding: 'Funding'
 };
 
 /**

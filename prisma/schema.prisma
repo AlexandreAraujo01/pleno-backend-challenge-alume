@@ -16,12 +16,29 @@ datasource db {
 
 
 model Student {
-  id            String   @id @default(uuid())
+  id            String     @id @default(uuid())
   name          String
   lastName      String
-  email         String   @unique
+  email         String     @unique
   password_hash String
-  created_at    DateTime @default(now())
+  created_at    DateTime   @default(now())
+
+  fundings      Funding[]
 
   @@map("students")
 }
+
+model Funding {
+  id                 String   @id @default(uuid())
+  studentId          String
+  total_value        Float
+  installment_quantity Int
+  monthly_interest   Float
+  monthly_installment_amount Float
+
+
+  student            Student  @relation(fields: [studentId], references: [id])
+
+  @@map("fundings")
+}
+

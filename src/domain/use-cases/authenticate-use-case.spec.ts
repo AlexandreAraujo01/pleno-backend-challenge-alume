@@ -23,7 +23,7 @@ describe('Authenticate use case', () => {
             const student = await studentFactory({name: 'John', lastName: 'Doe', email: 'johndoe@example.com', 'password': '123456'})
             studentRepository.items.push(student)
             const response = await sut.execute({email: 'johndoe@example.com', 'password': '123456'})
-            expect(response.isRight())
+            expect(response.isRight()).toBe(true)
             expect(response.value).toEqual({token: expect.any(String)})
     })
 
@@ -31,7 +31,7 @@ describe('Authenticate use case', () => {
         const student = await studentFactory({name: 'John', lastName: 'Doe', email: 'johndoe@example.com', 'password': '123456'})
         studentRepository.items.push(student)
         const response = await sut.execute({email: 'johndoe@example.com', 'password': '123456789'})
-        expect(response.isLeft())
+        expect(response.isLeft()).toBe(true)
         expect(response.value).toBeInstanceOf(WrongCredentialsError)
     })
 
@@ -39,7 +39,7 @@ describe('Authenticate use case', () => {
         const student = await studentFactory({name: 'John', lastName: 'Doe', email: 'johndoe@example.com', 'password': '123456'})
         studentRepository.items.push(student)
         const response = await sut.execute({email: 'johndoehary@example.com', 'password': '123456'})
-        expect(response.isLeft())
+        expect(response.isLeft()).toBe(true)
         expect(response.value).toBeInstanceOf(WrongCredentialsError)
     })
 })

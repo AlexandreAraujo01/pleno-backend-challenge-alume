@@ -1,5 +1,4 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { GetStudentInfoUseCase } from "./get-student-info-use-case";
 import { InMemoryStudentRepository } from "../../test/repositories/in-memory-student-repository";
 import { studentFactory } from "../../test/factories/student-factory";
 import { UpdateStudentInfoUseCase } from "./update-student-info-use-case";
@@ -24,7 +23,7 @@ describe('Get student info use case', () => {
                             student.id
                             )
 
-        expect(response.isRight())
+        expect(response.isRight()).toBe(true)
         expect(response.value).toEqual(expect.objectContaining({
             email: 'joandoe@example.com',
             name: 'Joan'
@@ -41,7 +40,7 @@ describe('Get student info use case', () => {
                             new UniqueEntityID('fake-id')
                             )
 
-        expect(response.isLeft())
+        expect(response.isLeft()).toBe(true)
         expect(response.value).toBeInstanceOf(StudentNotFoundError)
     })
 })

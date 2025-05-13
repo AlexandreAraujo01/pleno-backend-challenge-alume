@@ -18,6 +18,11 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  * 
  */
 export type Student = $Result.DefaultSelection<Prisma.$StudentPayload>
+/**
+ * Model Funding
+ * 
+ */
+export type Funding = $Result.DefaultSelection<Prisma.$FundingPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -153,6 +158,16 @@ export class PrismaClient<
     * ```
     */
   get student(): Prisma.StudentDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.funding`: Exposes CRUD operations for the **Funding** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Fundings
+    * const fundings = await prisma.funding.findMany()
+    * ```
+    */
+  get funding(): Prisma.FundingDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -593,7 +608,8 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    Student: 'Student'
+    Student: 'Student',
+    Funding: 'Funding'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -612,7 +628,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "student"
+      modelProps: "student" | "funding"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -687,6 +703,80 @@ export namespace Prisma {
           count: {
             args: Prisma.StudentCountArgs<ExtArgs>
             result: $Utils.Optional<StudentCountAggregateOutputType> | number
+          }
+        }
+      }
+      Funding: {
+        payload: Prisma.$FundingPayload<ExtArgs>
+        fields: Prisma.FundingFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.FundingFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FundingPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.FundingFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FundingPayload>
+          }
+          findFirst: {
+            args: Prisma.FundingFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FundingPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.FundingFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FundingPayload>
+          }
+          findMany: {
+            args: Prisma.FundingFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FundingPayload>[]
+          }
+          create: {
+            args: Prisma.FundingCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FundingPayload>
+          }
+          createMany: {
+            args: Prisma.FundingCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.FundingCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FundingPayload>[]
+          }
+          delete: {
+            args: Prisma.FundingDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FundingPayload>
+          }
+          update: {
+            args: Prisma.FundingUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FundingPayload>
+          }
+          deleteMany: {
+            args: Prisma.FundingDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.FundingUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.FundingUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FundingPayload>[]
+          }
+          upsert: {
+            args: Prisma.FundingUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FundingPayload>
+          }
+          aggregate: {
+            args: Prisma.FundingAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateFunding>
+          }
+          groupBy: {
+            args: Prisma.FundingGroupByArgs<ExtArgs>
+            result: $Utils.Optional<FundingGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.FundingCountArgs<ExtArgs>
+            result: $Utils.Optional<FundingCountAggregateOutputType> | number
           }
         }
       }
@@ -775,6 +865,7 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     student?: StudentOmit
+    funding?: FundingOmit
   }
 
   /* Types for Logging */
@@ -863,6 +954,36 @@ export namespace Prisma {
    * Count Types
    */
 
+
+  /**
+   * Count Type StudentCountOutputType
+   */
+
+  export type StudentCountOutputType = {
+    fundings: number
+  }
+
+  export type StudentCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    fundings?: boolean | StudentCountOutputTypeCountFundingsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * StudentCountOutputType without action
+   */
+  export type StudentCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudentCountOutputType
+     */
+    select?: StudentCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * StudentCountOutputType without action
+   */
+  export type StudentCountOutputTypeCountFundingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FundingWhereInput
+  }
 
 
   /**
@@ -1041,6 +1162,8 @@ export namespace Prisma {
     email?: boolean
     password_hash?: boolean
     created_at?: boolean
+    fundings?: boolean | Student$fundingsArgs<ExtArgs>
+    _count?: boolean | StudentCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["student"]>
 
   export type StudentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1071,10 +1194,18 @@ export namespace Prisma {
   }
 
   export type StudentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "lastName" | "email" | "password_hash" | "created_at", ExtArgs["result"]["student"]>
+  export type StudentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    fundings?: boolean | Student$fundingsArgs<ExtArgs>
+    _count?: boolean | StudentCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type StudentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type StudentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $StudentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Student"
-    objects: {}
+    objects: {
+      fundings: Prisma.$FundingPayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
@@ -1476,6 +1607,7 @@ export namespace Prisma {
    */
   export interface Prisma__StudentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    fundings<T extends Student$fundingsArgs<ExtArgs> = {}>(args?: Subset<T, Student$fundingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FundingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1528,6 +1660,10 @@ export namespace Prisma {
      */
     omit?: StudentOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentInclude<ExtArgs> | null
+    /**
      * Filter, which Student to fetch.
      */
     where: StudentWhereUniqueInput
@@ -1546,6 +1682,10 @@ export namespace Prisma {
      */
     omit?: StudentOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentInclude<ExtArgs> | null
+    /**
      * Filter, which Student to fetch.
      */
     where: StudentWhereUniqueInput
@@ -1563,6 +1703,10 @@ export namespace Prisma {
      * Omit specific fields from the Student
      */
     omit?: StudentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentInclude<ExtArgs> | null
     /**
      * Filter, which Student to fetch.
      */
@@ -1612,6 +1756,10 @@ export namespace Prisma {
      */
     omit?: StudentOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentInclude<ExtArgs> | null
+    /**
      * Filter, which Student to fetch.
      */
     where?: StudentWhereInput
@@ -1660,6 +1808,10 @@ export namespace Prisma {
      */
     omit?: StudentOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentInclude<ExtArgs> | null
+    /**
      * Filter, which Students to fetch.
      */
     where?: StudentWhereInput
@@ -1702,6 +1854,10 @@ export namespace Prisma {
      * Omit specific fields from the Student
      */
     omit?: StudentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentInclude<ExtArgs> | null
     /**
      * The data needed to create a Student.
      */
@@ -1750,6 +1906,10 @@ export namespace Prisma {
      * Omit specific fields from the Student
      */
     omit?: StudentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentInclude<ExtArgs> | null
     /**
      * The data needed to update a Student.
      */
@@ -1817,6 +1977,10 @@ export namespace Prisma {
      */
     omit?: StudentOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentInclude<ExtArgs> | null
+    /**
      * The filter to search for the Student to update in case it exists.
      */
     where: StudentWhereUniqueInput
@@ -1843,6 +2007,10 @@ export namespace Prisma {
      */
     omit?: StudentOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentInclude<ExtArgs> | null
+    /**
      * Filter which Student to delete.
      */
     where: StudentWhereUniqueInput
@@ -1863,6 +2031,30 @@ export namespace Prisma {
   }
 
   /**
+   * Student.fundings
+   */
+  export type Student$fundingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Funding
+     */
+    select?: FundingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Funding
+     */
+    omit?: FundingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FundingInclude<ExtArgs> | null
+    where?: FundingWhereInput
+    orderBy?: FundingOrderByWithRelationInput | FundingOrderByWithRelationInput[]
+    cursor?: FundingWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FundingScalarFieldEnum | FundingScalarFieldEnum[]
+  }
+
+  /**
    * Student without action
    */
   export type StudentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1874,6 +2066,1127 @@ export namespace Prisma {
      * Omit specific fields from the Student
      */
     omit?: StudentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StudentInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Funding
+   */
+
+  export type AggregateFunding = {
+    _count: FundingCountAggregateOutputType | null
+    _avg: FundingAvgAggregateOutputType | null
+    _sum: FundingSumAggregateOutputType | null
+    _min: FundingMinAggregateOutputType | null
+    _max: FundingMaxAggregateOutputType | null
+  }
+
+  export type FundingAvgAggregateOutputType = {
+    total_value: number | null
+    installment_quantity: number | null
+    monthly_interest: number | null
+    monthly_installment_amount: number | null
+  }
+
+  export type FundingSumAggregateOutputType = {
+    total_value: number | null
+    installment_quantity: number | null
+    monthly_interest: number | null
+    monthly_installment_amount: number | null
+  }
+
+  export type FundingMinAggregateOutputType = {
+    id: string | null
+    studentId: string | null
+    total_value: number | null
+    installment_quantity: number | null
+    monthly_interest: number | null
+    monthly_installment_amount: number | null
+  }
+
+  export type FundingMaxAggregateOutputType = {
+    id: string | null
+    studentId: string | null
+    total_value: number | null
+    installment_quantity: number | null
+    monthly_interest: number | null
+    monthly_installment_amount: number | null
+  }
+
+  export type FundingCountAggregateOutputType = {
+    id: number
+    studentId: number
+    total_value: number
+    installment_quantity: number
+    monthly_interest: number
+    monthly_installment_amount: number
+    _all: number
+  }
+
+
+  export type FundingAvgAggregateInputType = {
+    total_value?: true
+    installment_quantity?: true
+    monthly_interest?: true
+    monthly_installment_amount?: true
+  }
+
+  export type FundingSumAggregateInputType = {
+    total_value?: true
+    installment_quantity?: true
+    monthly_interest?: true
+    monthly_installment_amount?: true
+  }
+
+  export type FundingMinAggregateInputType = {
+    id?: true
+    studentId?: true
+    total_value?: true
+    installment_quantity?: true
+    monthly_interest?: true
+    monthly_installment_amount?: true
+  }
+
+  export type FundingMaxAggregateInputType = {
+    id?: true
+    studentId?: true
+    total_value?: true
+    installment_quantity?: true
+    monthly_interest?: true
+    monthly_installment_amount?: true
+  }
+
+  export type FundingCountAggregateInputType = {
+    id?: true
+    studentId?: true
+    total_value?: true
+    installment_quantity?: true
+    monthly_interest?: true
+    monthly_installment_amount?: true
+    _all?: true
+  }
+
+  export type FundingAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Funding to aggregate.
+     */
+    where?: FundingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Fundings to fetch.
+     */
+    orderBy?: FundingOrderByWithRelationInput | FundingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FundingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Fundings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Fundings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Fundings
+    **/
+    _count?: true | FundingCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: FundingAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: FundingSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FundingMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FundingMaxAggregateInputType
+  }
+
+  export type GetFundingAggregateType<T extends FundingAggregateArgs> = {
+        [P in keyof T & keyof AggregateFunding]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFunding[P]>
+      : GetScalarType<T[P], AggregateFunding[P]>
+  }
+
+
+
+
+  export type FundingGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FundingWhereInput
+    orderBy?: FundingOrderByWithAggregationInput | FundingOrderByWithAggregationInput[]
+    by: FundingScalarFieldEnum[] | FundingScalarFieldEnum
+    having?: FundingScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FundingCountAggregateInputType | true
+    _avg?: FundingAvgAggregateInputType
+    _sum?: FundingSumAggregateInputType
+    _min?: FundingMinAggregateInputType
+    _max?: FundingMaxAggregateInputType
+  }
+
+  export type FundingGroupByOutputType = {
+    id: string
+    studentId: string
+    total_value: number
+    installment_quantity: number
+    monthly_interest: number
+    monthly_installment_amount: number
+    _count: FundingCountAggregateOutputType | null
+    _avg: FundingAvgAggregateOutputType | null
+    _sum: FundingSumAggregateOutputType | null
+    _min: FundingMinAggregateOutputType | null
+    _max: FundingMaxAggregateOutputType | null
+  }
+
+  type GetFundingGroupByPayload<T extends FundingGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<FundingGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FundingGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FundingGroupByOutputType[P]>
+            : GetScalarType<T[P], FundingGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FundingSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    studentId?: boolean
+    total_value?: boolean
+    installment_quantity?: boolean
+    monthly_interest?: boolean
+    monthly_installment_amount?: boolean
+    student?: boolean | StudentDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["funding"]>
+
+  export type FundingSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    studentId?: boolean
+    total_value?: boolean
+    installment_quantity?: boolean
+    monthly_interest?: boolean
+    monthly_installment_amount?: boolean
+    student?: boolean | StudentDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["funding"]>
+
+  export type FundingSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    studentId?: boolean
+    total_value?: boolean
+    installment_quantity?: boolean
+    monthly_interest?: boolean
+    monthly_installment_amount?: boolean
+    student?: boolean | StudentDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["funding"]>
+
+  export type FundingSelectScalar = {
+    id?: boolean
+    studentId?: boolean
+    total_value?: boolean
+    installment_quantity?: boolean
+    monthly_interest?: boolean
+    monthly_installment_amount?: boolean
+  }
+
+  export type FundingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "studentId" | "total_value" | "installment_quantity" | "monthly_interest" | "monthly_installment_amount", ExtArgs["result"]["funding"]>
+  export type FundingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    student?: boolean | StudentDefaultArgs<ExtArgs>
+  }
+  export type FundingIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    student?: boolean | StudentDefaultArgs<ExtArgs>
+  }
+  export type FundingIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    student?: boolean | StudentDefaultArgs<ExtArgs>
+  }
+
+  export type $FundingPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Funding"
+    objects: {
+      student: Prisma.$StudentPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      studentId: string
+      total_value: number
+      installment_quantity: number
+      monthly_interest: number
+      monthly_installment_amount: number
+    }, ExtArgs["result"]["funding"]>
+    composites: {}
+  }
+
+  type FundingGetPayload<S extends boolean | null | undefined | FundingDefaultArgs> = $Result.GetResult<Prisma.$FundingPayload, S>
+
+  type FundingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<FundingFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: FundingCountAggregateInputType | true
+    }
+
+  export interface FundingDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Funding'], meta: { name: 'Funding' } }
+    /**
+     * Find zero or one Funding that matches the filter.
+     * @param {FundingFindUniqueArgs} args - Arguments to find a Funding
+     * @example
+     * // Get one Funding
+     * const funding = await prisma.funding.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends FundingFindUniqueArgs>(args: SelectSubset<T, FundingFindUniqueArgs<ExtArgs>>): Prisma__FundingClient<$Result.GetResult<Prisma.$FundingPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Funding that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {FundingFindUniqueOrThrowArgs} args - Arguments to find a Funding
+     * @example
+     * // Get one Funding
+     * const funding = await prisma.funding.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends FundingFindUniqueOrThrowArgs>(args: SelectSubset<T, FundingFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FundingClient<$Result.GetResult<Prisma.$FundingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Funding that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FundingFindFirstArgs} args - Arguments to find a Funding
+     * @example
+     * // Get one Funding
+     * const funding = await prisma.funding.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends FundingFindFirstArgs>(args?: SelectSubset<T, FundingFindFirstArgs<ExtArgs>>): Prisma__FundingClient<$Result.GetResult<Prisma.$FundingPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Funding that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FundingFindFirstOrThrowArgs} args - Arguments to find a Funding
+     * @example
+     * // Get one Funding
+     * const funding = await prisma.funding.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends FundingFindFirstOrThrowArgs>(args?: SelectSubset<T, FundingFindFirstOrThrowArgs<ExtArgs>>): Prisma__FundingClient<$Result.GetResult<Prisma.$FundingPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Fundings that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FundingFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Fundings
+     * const fundings = await prisma.funding.findMany()
+     * 
+     * // Get first 10 Fundings
+     * const fundings = await prisma.funding.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const fundingWithIdOnly = await prisma.funding.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends FundingFindManyArgs>(args?: SelectSubset<T, FundingFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FundingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Funding.
+     * @param {FundingCreateArgs} args - Arguments to create a Funding.
+     * @example
+     * // Create one Funding
+     * const Funding = await prisma.funding.create({
+     *   data: {
+     *     // ... data to create a Funding
+     *   }
+     * })
+     * 
+     */
+    create<T extends FundingCreateArgs>(args: SelectSubset<T, FundingCreateArgs<ExtArgs>>): Prisma__FundingClient<$Result.GetResult<Prisma.$FundingPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Fundings.
+     * @param {FundingCreateManyArgs} args - Arguments to create many Fundings.
+     * @example
+     * // Create many Fundings
+     * const funding = await prisma.funding.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends FundingCreateManyArgs>(args?: SelectSubset<T, FundingCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Fundings and returns the data saved in the database.
+     * @param {FundingCreateManyAndReturnArgs} args - Arguments to create many Fundings.
+     * @example
+     * // Create many Fundings
+     * const funding = await prisma.funding.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Fundings and only return the `id`
+     * const fundingWithIdOnly = await prisma.funding.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends FundingCreateManyAndReturnArgs>(args?: SelectSubset<T, FundingCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FundingPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Funding.
+     * @param {FundingDeleteArgs} args - Arguments to delete one Funding.
+     * @example
+     * // Delete one Funding
+     * const Funding = await prisma.funding.delete({
+     *   where: {
+     *     // ... filter to delete one Funding
+     *   }
+     * })
+     * 
+     */
+    delete<T extends FundingDeleteArgs>(args: SelectSubset<T, FundingDeleteArgs<ExtArgs>>): Prisma__FundingClient<$Result.GetResult<Prisma.$FundingPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Funding.
+     * @param {FundingUpdateArgs} args - Arguments to update one Funding.
+     * @example
+     * // Update one Funding
+     * const funding = await prisma.funding.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends FundingUpdateArgs>(args: SelectSubset<T, FundingUpdateArgs<ExtArgs>>): Prisma__FundingClient<$Result.GetResult<Prisma.$FundingPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Fundings.
+     * @param {FundingDeleteManyArgs} args - Arguments to filter Fundings to delete.
+     * @example
+     * // Delete a few Fundings
+     * const { count } = await prisma.funding.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends FundingDeleteManyArgs>(args?: SelectSubset<T, FundingDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Fundings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FundingUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Fundings
+     * const funding = await prisma.funding.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends FundingUpdateManyArgs>(args: SelectSubset<T, FundingUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Fundings and returns the data updated in the database.
+     * @param {FundingUpdateManyAndReturnArgs} args - Arguments to update many Fundings.
+     * @example
+     * // Update many Fundings
+     * const funding = await prisma.funding.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Fundings and only return the `id`
+     * const fundingWithIdOnly = await prisma.funding.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends FundingUpdateManyAndReturnArgs>(args: SelectSubset<T, FundingUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FundingPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Funding.
+     * @param {FundingUpsertArgs} args - Arguments to update or create a Funding.
+     * @example
+     * // Update or create a Funding
+     * const funding = await prisma.funding.upsert({
+     *   create: {
+     *     // ... data to create a Funding
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Funding we want to update
+     *   }
+     * })
+     */
+    upsert<T extends FundingUpsertArgs>(args: SelectSubset<T, FundingUpsertArgs<ExtArgs>>): Prisma__FundingClient<$Result.GetResult<Prisma.$FundingPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Fundings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FundingCountArgs} args - Arguments to filter Fundings to count.
+     * @example
+     * // Count the number of Fundings
+     * const count = await prisma.funding.count({
+     *   where: {
+     *     // ... the filter for the Fundings we want to count
+     *   }
+     * })
+    **/
+    count<T extends FundingCountArgs>(
+      args?: Subset<T, FundingCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FundingCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Funding.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FundingAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FundingAggregateArgs>(args: Subset<T, FundingAggregateArgs>): Prisma.PrismaPromise<GetFundingAggregateType<T>>
+
+    /**
+     * Group by Funding.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FundingGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FundingGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FundingGroupByArgs['orderBy'] }
+        : { orderBy?: FundingGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FundingGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFundingGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Funding model
+   */
+  readonly fields: FundingFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Funding.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__FundingClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    student<T extends StudentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StudentDefaultArgs<ExtArgs>>): Prisma__StudentClient<$Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Funding model
+   */
+  interface FundingFieldRefs {
+    readonly id: FieldRef<"Funding", 'String'>
+    readonly studentId: FieldRef<"Funding", 'String'>
+    readonly total_value: FieldRef<"Funding", 'Float'>
+    readonly installment_quantity: FieldRef<"Funding", 'Int'>
+    readonly monthly_interest: FieldRef<"Funding", 'Float'>
+    readonly monthly_installment_amount: FieldRef<"Funding", 'Float'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Funding findUnique
+   */
+  export type FundingFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Funding
+     */
+    select?: FundingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Funding
+     */
+    omit?: FundingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FundingInclude<ExtArgs> | null
+    /**
+     * Filter, which Funding to fetch.
+     */
+    where: FundingWhereUniqueInput
+  }
+
+  /**
+   * Funding findUniqueOrThrow
+   */
+  export type FundingFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Funding
+     */
+    select?: FundingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Funding
+     */
+    omit?: FundingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FundingInclude<ExtArgs> | null
+    /**
+     * Filter, which Funding to fetch.
+     */
+    where: FundingWhereUniqueInput
+  }
+
+  /**
+   * Funding findFirst
+   */
+  export type FundingFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Funding
+     */
+    select?: FundingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Funding
+     */
+    omit?: FundingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FundingInclude<ExtArgs> | null
+    /**
+     * Filter, which Funding to fetch.
+     */
+    where?: FundingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Fundings to fetch.
+     */
+    orderBy?: FundingOrderByWithRelationInput | FundingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Fundings.
+     */
+    cursor?: FundingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Fundings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Fundings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Fundings.
+     */
+    distinct?: FundingScalarFieldEnum | FundingScalarFieldEnum[]
+  }
+
+  /**
+   * Funding findFirstOrThrow
+   */
+  export type FundingFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Funding
+     */
+    select?: FundingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Funding
+     */
+    omit?: FundingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FundingInclude<ExtArgs> | null
+    /**
+     * Filter, which Funding to fetch.
+     */
+    where?: FundingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Fundings to fetch.
+     */
+    orderBy?: FundingOrderByWithRelationInput | FundingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Fundings.
+     */
+    cursor?: FundingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Fundings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Fundings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Fundings.
+     */
+    distinct?: FundingScalarFieldEnum | FundingScalarFieldEnum[]
+  }
+
+  /**
+   * Funding findMany
+   */
+  export type FundingFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Funding
+     */
+    select?: FundingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Funding
+     */
+    omit?: FundingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FundingInclude<ExtArgs> | null
+    /**
+     * Filter, which Fundings to fetch.
+     */
+    where?: FundingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Fundings to fetch.
+     */
+    orderBy?: FundingOrderByWithRelationInput | FundingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Fundings.
+     */
+    cursor?: FundingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Fundings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Fundings.
+     */
+    skip?: number
+    distinct?: FundingScalarFieldEnum | FundingScalarFieldEnum[]
+  }
+
+  /**
+   * Funding create
+   */
+  export type FundingCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Funding
+     */
+    select?: FundingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Funding
+     */
+    omit?: FundingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FundingInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Funding.
+     */
+    data: XOR<FundingCreateInput, FundingUncheckedCreateInput>
+  }
+
+  /**
+   * Funding createMany
+   */
+  export type FundingCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Fundings.
+     */
+    data: FundingCreateManyInput | FundingCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Funding createManyAndReturn
+   */
+  export type FundingCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Funding
+     */
+    select?: FundingSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Funding
+     */
+    omit?: FundingOmit<ExtArgs> | null
+    /**
+     * The data used to create many Fundings.
+     */
+    data: FundingCreateManyInput | FundingCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FundingIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Funding update
+   */
+  export type FundingUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Funding
+     */
+    select?: FundingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Funding
+     */
+    omit?: FundingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FundingInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Funding.
+     */
+    data: XOR<FundingUpdateInput, FundingUncheckedUpdateInput>
+    /**
+     * Choose, which Funding to update.
+     */
+    where: FundingWhereUniqueInput
+  }
+
+  /**
+   * Funding updateMany
+   */
+  export type FundingUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Fundings.
+     */
+    data: XOR<FundingUpdateManyMutationInput, FundingUncheckedUpdateManyInput>
+    /**
+     * Filter which Fundings to update
+     */
+    where?: FundingWhereInput
+    /**
+     * Limit how many Fundings to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Funding updateManyAndReturn
+   */
+  export type FundingUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Funding
+     */
+    select?: FundingSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Funding
+     */
+    omit?: FundingOmit<ExtArgs> | null
+    /**
+     * The data used to update Fundings.
+     */
+    data: XOR<FundingUpdateManyMutationInput, FundingUncheckedUpdateManyInput>
+    /**
+     * Filter which Fundings to update
+     */
+    where?: FundingWhereInput
+    /**
+     * Limit how many Fundings to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FundingIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Funding upsert
+   */
+  export type FundingUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Funding
+     */
+    select?: FundingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Funding
+     */
+    omit?: FundingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FundingInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Funding to update in case it exists.
+     */
+    where: FundingWhereUniqueInput
+    /**
+     * In case the Funding found by the `where` argument doesn't exist, create a new Funding with this data.
+     */
+    create: XOR<FundingCreateInput, FundingUncheckedCreateInput>
+    /**
+     * In case the Funding was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FundingUpdateInput, FundingUncheckedUpdateInput>
+  }
+
+  /**
+   * Funding delete
+   */
+  export type FundingDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Funding
+     */
+    select?: FundingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Funding
+     */
+    omit?: FundingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FundingInclude<ExtArgs> | null
+    /**
+     * Filter which Funding to delete.
+     */
+    where: FundingWhereUniqueInput
+  }
+
+  /**
+   * Funding deleteMany
+   */
+  export type FundingDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Fundings to delete
+     */
+    where?: FundingWhereInput
+    /**
+     * Limit how many Fundings to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Funding without action
+   */
+  export type FundingDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Funding
+     */
+    select?: FundingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Funding
+     */
+    omit?: FundingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FundingInclude<ExtArgs> | null
   }
 
 
@@ -1901,6 +3214,18 @@ export namespace Prisma {
   };
 
   export type StudentScalarFieldEnum = (typeof StudentScalarFieldEnum)[keyof typeof StudentScalarFieldEnum]
+
+
+  export const FundingScalarFieldEnum: {
+    id: 'id',
+    studentId: 'studentId',
+    total_value: 'total_value',
+    installment_quantity: 'installment_quantity',
+    monthly_interest: 'monthly_interest',
+    monthly_installment_amount: 'monthly_installment_amount'
+  };
+
+  export type FundingScalarFieldEnum = (typeof FundingScalarFieldEnum)[keyof typeof FundingScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -1953,6 +3278,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float[]'
+   */
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -1979,6 +3318,7 @@ export namespace Prisma {
     email?: StringFilter<"Student"> | string
     password_hash?: StringFilter<"Student"> | string
     created_at?: DateTimeFilter<"Student"> | Date | string
+    fundings?: FundingListRelationFilter
   }
 
   export type StudentOrderByWithRelationInput = {
@@ -1988,6 +3328,7 @@ export namespace Prisma {
     email?: SortOrder
     password_hash?: SortOrder
     created_at?: SortOrder
+    fundings?: FundingOrderByRelationAggregateInput
   }
 
   export type StudentWhereUniqueInput = Prisma.AtLeast<{
@@ -2000,6 +3341,7 @@ export namespace Prisma {
     lastName?: StringFilter<"Student"> | string
     password_hash?: StringFilter<"Student"> | string
     created_at?: DateTimeFilter<"Student"> | Date | string
+    fundings?: FundingListRelationFilter
   }, "id" | "email">
 
   export type StudentOrderByWithAggregationInput = {
@@ -2026,6 +3368,68 @@ export namespace Prisma {
     created_at?: DateTimeWithAggregatesFilter<"Student"> | Date | string
   }
 
+  export type FundingWhereInput = {
+    AND?: FundingWhereInput | FundingWhereInput[]
+    OR?: FundingWhereInput[]
+    NOT?: FundingWhereInput | FundingWhereInput[]
+    id?: StringFilter<"Funding"> | string
+    studentId?: StringFilter<"Funding"> | string
+    total_value?: FloatFilter<"Funding"> | number
+    installment_quantity?: IntFilter<"Funding"> | number
+    monthly_interest?: FloatFilter<"Funding"> | number
+    monthly_installment_amount?: FloatFilter<"Funding"> | number
+    student?: XOR<StudentScalarRelationFilter, StudentWhereInput>
+  }
+
+  export type FundingOrderByWithRelationInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    total_value?: SortOrder
+    installment_quantity?: SortOrder
+    monthly_interest?: SortOrder
+    monthly_installment_amount?: SortOrder
+    student?: StudentOrderByWithRelationInput
+  }
+
+  export type FundingWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: FundingWhereInput | FundingWhereInput[]
+    OR?: FundingWhereInput[]
+    NOT?: FundingWhereInput | FundingWhereInput[]
+    studentId?: StringFilter<"Funding"> | string
+    total_value?: FloatFilter<"Funding"> | number
+    installment_quantity?: IntFilter<"Funding"> | number
+    monthly_interest?: FloatFilter<"Funding"> | number
+    monthly_installment_amount?: FloatFilter<"Funding"> | number
+    student?: XOR<StudentScalarRelationFilter, StudentWhereInput>
+  }, "id">
+
+  export type FundingOrderByWithAggregationInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    total_value?: SortOrder
+    installment_quantity?: SortOrder
+    monthly_interest?: SortOrder
+    monthly_installment_amount?: SortOrder
+    _count?: FundingCountOrderByAggregateInput
+    _avg?: FundingAvgOrderByAggregateInput
+    _max?: FundingMaxOrderByAggregateInput
+    _min?: FundingMinOrderByAggregateInput
+    _sum?: FundingSumOrderByAggregateInput
+  }
+
+  export type FundingScalarWhereWithAggregatesInput = {
+    AND?: FundingScalarWhereWithAggregatesInput | FundingScalarWhereWithAggregatesInput[]
+    OR?: FundingScalarWhereWithAggregatesInput[]
+    NOT?: FundingScalarWhereWithAggregatesInput | FundingScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Funding"> | string
+    studentId?: StringWithAggregatesFilter<"Funding"> | string
+    total_value?: FloatWithAggregatesFilter<"Funding"> | number
+    installment_quantity?: IntWithAggregatesFilter<"Funding"> | number
+    monthly_interest?: FloatWithAggregatesFilter<"Funding"> | number
+    monthly_installment_amount?: FloatWithAggregatesFilter<"Funding"> | number
+  }
+
   export type StudentCreateInput = {
     id?: string
     name: string
@@ -2033,6 +3437,7 @@ export namespace Prisma {
     email: string
     password_hash: string
     created_at?: Date | string
+    fundings?: FundingCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateInput = {
@@ -2042,6 +3447,7 @@ export namespace Prisma {
     email: string
     password_hash: string
     created_at?: Date | string
+    fundings?: FundingUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUpdateInput = {
@@ -2051,6 +3457,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    fundings?: FundingUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateInput = {
@@ -2060,6 +3467,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password_hash?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    fundings?: FundingUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentCreateManyInput = {
@@ -2089,6 +3497,68 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type FundingCreateInput = {
+    id?: string
+    total_value: number
+    installment_quantity: number
+    monthly_interest: number
+    monthly_installment_amount: number
+    student: StudentCreateNestedOneWithoutFundingsInput
+  }
+
+  export type FundingUncheckedCreateInput = {
+    id?: string
+    studentId: string
+    total_value: number
+    installment_quantity: number
+    monthly_interest: number
+    monthly_installment_amount: number
+  }
+
+  export type FundingUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    total_value?: FloatFieldUpdateOperationsInput | number
+    installment_quantity?: IntFieldUpdateOperationsInput | number
+    monthly_interest?: FloatFieldUpdateOperationsInput | number
+    monthly_installment_amount?: FloatFieldUpdateOperationsInput | number
+    student?: StudentUpdateOneRequiredWithoutFundingsNestedInput
+  }
+
+  export type FundingUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    studentId?: StringFieldUpdateOperationsInput | string
+    total_value?: FloatFieldUpdateOperationsInput | number
+    installment_quantity?: IntFieldUpdateOperationsInput | number
+    monthly_interest?: FloatFieldUpdateOperationsInput | number
+    monthly_installment_amount?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type FundingCreateManyInput = {
+    id?: string
+    studentId: string
+    total_value: number
+    installment_quantity: number
+    monthly_interest: number
+    monthly_installment_amount: number
+  }
+
+  export type FundingUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    total_value?: FloatFieldUpdateOperationsInput | number
+    installment_quantity?: IntFieldUpdateOperationsInput | number
+    monthly_interest?: FloatFieldUpdateOperationsInput | number
+    monthly_installment_amount?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type FundingUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    studentId?: StringFieldUpdateOperationsInput | string
+    total_value?: FloatFieldUpdateOperationsInput | number
+    installment_quantity?: IntFieldUpdateOperationsInput | number
+    monthly_interest?: FloatFieldUpdateOperationsInput | number
+    monthly_installment_amount?: FloatFieldUpdateOperationsInput | number
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -2113,6 +3583,16 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type FundingListRelationFilter = {
+    every?: FundingWhereInput
+    some?: FundingWhereInput
+    none?: FundingWhereInput
+  }
+
+  export type FundingOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type StudentCountOrderByAggregateInput = {
@@ -2174,12 +3654,184 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type StudentScalarRelationFilter = {
+    is?: StudentWhereInput
+    isNot?: StudentWhereInput
+  }
+
+  export type FundingCountOrderByAggregateInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    total_value?: SortOrder
+    installment_quantity?: SortOrder
+    monthly_interest?: SortOrder
+    monthly_installment_amount?: SortOrder
+  }
+
+  export type FundingAvgOrderByAggregateInput = {
+    total_value?: SortOrder
+    installment_quantity?: SortOrder
+    monthly_interest?: SortOrder
+    monthly_installment_amount?: SortOrder
+  }
+
+  export type FundingMaxOrderByAggregateInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    total_value?: SortOrder
+    installment_quantity?: SortOrder
+    monthly_interest?: SortOrder
+    monthly_installment_amount?: SortOrder
+  }
+
+  export type FundingMinOrderByAggregateInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    total_value?: SortOrder
+    installment_quantity?: SortOrder
+    monthly_interest?: SortOrder
+    monthly_installment_amount?: SortOrder
+  }
+
+  export type FundingSumOrderByAggregateInput = {
+    total_value?: SortOrder
+    installment_quantity?: SortOrder
+    monthly_interest?: SortOrder
+    monthly_installment_amount?: SortOrder
+  }
+
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type FundingCreateNestedManyWithoutStudentInput = {
+    create?: XOR<FundingCreateWithoutStudentInput, FundingUncheckedCreateWithoutStudentInput> | FundingCreateWithoutStudentInput[] | FundingUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: FundingCreateOrConnectWithoutStudentInput | FundingCreateOrConnectWithoutStudentInput[]
+    createMany?: FundingCreateManyStudentInputEnvelope
+    connect?: FundingWhereUniqueInput | FundingWhereUniqueInput[]
+  }
+
+  export type FundingUncheckedCreateNestedManyWithoutStudentInput = {
+    create?: XOR<FundingCreateWithoutStudentInput, FundingUncheckedCreateWithoutStudentInput> | FundingCreateWithoutStudentInput[] | FundingUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: FundingCreateOrConnectWithoutStudentInput | FundingCreateOrConnectWithoutStudentInput[]
+    createMany?: FundingCreateManyStudentInputEnvelope
+    connect?: FundingWhereUniqueInput | FundingWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
+  }
+
+  export type FundingUpdateManyWithoutStudentNestedInput = {
+    create?: XOR<FundingCreateWithoutStudentInput, FundingUncheckedCreateWithoutStudentInput> | FundingCreateWithoutStudentInput[] | FundingUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: FundingCreateOrConnectWithoutStudentInput | FundingCreateOrConnectWithoutStudentInput[]
+    upsert?: FundingUpsertWithWhereUniqueWithoutStudentInput | FundingUpsertWithWhereUniqueWithoutStudentInput[]
+    createMany?: FundingCreateManyStudentInputEnvelope
+    set?: FundingWhereUniqueInput | FundingWhereUniqueInput[]
+    disconnect?: FundingWhereUniqueInput | FundingWhereUniqueInput[]
+    delete?: FundingWhereUniqueInput | FundingWhereUniqueInput[]
+    connect?: FundingWhereUniqueInput | FundingWhereUniqueInput[]
+    update?: FundingUpdateWithWhereUniqueWithoutStudentInput | FundingUpdateWithWhereUniqueWithoutStudentInput[]
+    updateMany?: FundingUpdateManyWithWhereWithoutStudentInput | FundingUpdateManyWithWhereWithoutStudentInput[]
+    deleteMany?: FundingScalarWhereInput | FundingScalarWhereInput[]
+  }
+
+  export type FundingUncheckedUpdateManyWithoutStudentNestedInput = {
+    create?: XOR<FundingCreateWithoutStudentInput, FundingUncheckedCreateWithoutStudentInput> | FundingCreateWithoutStudentInput[] | FundingUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: FundingCreateOrConnectWithoutStudentInput | FundingCreateOrConnectWithoutStudentInput[]
+    upsert?: FundingUpsertWithWhereUniqueWithoutStudentInput | FundingUpsertWithWhereUniqueWithoutStudentInput[]
+    createMany?: FundingCreateManyStudentInputEnvelope
+    set?: FundingWhereUniqueInput | FundingWhereUniqueInput[]
+    disconnect?: FundingWhereUniqueInput | FundingWhereUniqueInput[]
+    delete?: FundingWhereUniqueInput | FundingWhereUniqueInput[]
+    connect?: FundingWhereUniqueInput | FundingWhereUniqueInput[]
+    update?: FundingUpdateWithWhereUniqueWithoutStudentInput | FundingUpdateWithWhereUniqueWithoutStudentInput[]
+    updateMany?: FundingUpdateManyWithWhereWithoutStudentInput | FundingUpdateManyWithWhereWithoutStudentInput[]
+    deleteMany?: FundingScalarWhereInput | FundingScalarWhereInput[]
+  }
+
+  export type StudentCreateNestedOneWithoutFundingsInput = {
+    create?: XOR<StudentCreateWithoutFundingsInput, StudentUncheckedCreateWithoutFundingsInput>
+    connectOrCreate?: StudentCreateOrConnectWithoutFundingsInput
+    connect?: StudentWhereUniqueInput
+  }
+
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type StudentUpdateOneRequiredWithoutFundingsNestedInput = {
+    create?: XOR<StudentCreateWithoutFundingsInput, StudentUncheckedCreateWithoutFundingsInput>
+    connectOrCreate?: StudentCreateOrConnectWithoutFundingsInput
+    upsert?: StudentUpsertWithoutFundingsInput
+    connect?: StudentWhereUniqueInput
+    update?: XOR<XOR<StudentUpdateToOneWithWhereWithoutFundingsInput, StudentUpdateWithoutFundingsInput>, StudentUncheckedUpdateWithoutFundingsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -2247,6 +3899,187 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type FundingCreateWithoutStudentInput = {
+    id?: string
+    total_value: number
+    installment_quantity: number
+    monthly_interest: number
+    monthly_installment_amount: number
+  }
+
+  export type FundingUncheckedCreateWithoutStudentInput = {
+    id?: string
+    total_value: number
+    installment_quantity: number
+    monthly_interest: number
+    monthly_installment_amount: number
+  }
+
+  export type FundingCreateOrConnectWithoutStudentInput = {
+    where: FundingWhereUniqueInput
+    create: XOR<FundingCreateWithoutStudentInput, FundingUncheckedCreateWithoutStudentInput>
+  }
+
+  export type FundingCreateManyStudentInputEnvelope = {
+    data: FundingCreateManyStudentInput | FundingCreateManyStudentInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type FundingUpsertWithWhereUniqueWithoutStudentInput = {
+    where: FundingWhereUniqueInput
+    update: XOR<FundingUpdateWithoutStudentInput, FundingUncheckedUpdateWithoutStudentInput>
+    create: XOR<FundingCreateWithoutStudentInput, FundingUncheckedCreateWithoutStudentInput>
+  }
+
+  export type FundingUpdateWithWhereUniqueWithoutStudentInput = {
+    where: FundingWhereUniqueInput
+    data: XOR<FundingUpdateWithoutStudentInput, FundingUncheckedUpdateWithoutStudentInput>
+  }
+
+  export type FundingUpdateManyWithWhereWithoutStudentInput = {
+    where: FundingScalarWhereInput
+    data: XOR<FundingUpdateManyMutationInput, FundingUncheckedUpdateManyWithoutStudentInput>
+  }
+
+  export type FundingScalarWhereInput = {
+    AND?: FundingScalarWhereInput | FundingScalarWhereInput[]
+    OR?: FundingScalarWhereInput[]
+    NOT?: FundingScalarWhereInput | FundingScalarWhereInput[]
+    id?: StringFilter<"Funding"> | string
+    studentId?: StringFilter<"Funding"> | string
+    total_value?: FloatFilter<"Funding"> | number
+    installment_quantity?: IntFilter<"Funding"> | number
+    monthly_interest?: FloatFilter<"Funding"> | number
+    monthly_installment_amount?: FloatFilter<"Funding"> | number
+  }
+
+  export type StudentCreateWithoutFundingsInput = {
+    id?: string
+    name: string
+    lastName: string
+    email: string
+    password_hash: string
+    created_at?: Date | string
+  }
+
+  export type StudentUncheckedCreateWithoutFundingsInput = {
+    id?: string
+    name: string
+    lastName: string
+    email: string
+    password_hash: string
+    created_at?: Date | string
+  }
+
+  export type StudentCreateOrConnectWithoutFundingsInput = {
+    where: StudentWhereUniqueInput
+    create: XOR<StudentCreateWithoutFundingsInput, StudentUncheckedCreateWithoutFundingsInput>
+  }
+
+  export type StudentUpsertWithoutFundingsInput = {
+    update: XOR<StudentUpdateWithoutFundingsInput, StudentUncheckedUpdateWithoutFundingsInput>
+    create: XOR<StudentCreateWithoutFundingsInput, StudentUncheckedCreateWithoutFundingsInput>
+    where?: StudentWhereInput
+  }
+
+  export type StudentUpdateToOneWithWhereWithoutFundingsInput = {
+    where?: StudentWhereInput
+    data: XOR<StudentUpdateWithoutFundingsInput, StudentUncheckedUpdateWithoutFundingsInput>
+  }
+
+  export type StudentUpdateWithoutFundingsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password_hash?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudentUncheckedUpdateWithoutFundingsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password_hash?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FundingCreateManyStudentInput = {
+    id?: string
+    total_value: number
+    installment_quantity: number
+    monthly_interest: number
+    monthly_installment_amount: number
+  }
+
+  export type FundingUpdateWithoutStudentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    total_value?: FloatFieldUpdateOperationsInput | number
+    installment_quantity?: IntFieldUpdateOperationsInput | number
+    monthly_interest?: FloatFieldUpdateOperationsInput | number
+    monthly_installment_amount?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type FundingUncheckedUpdateWithoutStudentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    total_value?: FloatFieldUpdateOperationsInput | number
+    installment_quantity?: IntFieldUpdateOperationsInput | number
+    monthly_interest?: FloatFieldUpdateOperationsInput | number
+    monthly_installment_amount?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type FundingUncheckedUpdateManyWithoutStudentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    total_value?: FloatFieldUpdateOperationsInput | number
+    installment_quantity?: IntFieldUpdateOperationsInput | number
+    monthly_interest?: FloatFieldUpdateOperationsInput | number
+    monthly_installment_amount?: FloatFieldUpdateOperationsInput | number
   }
 
 
