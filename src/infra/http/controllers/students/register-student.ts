@@ -34,5 +34,5 @@ export async function registerStudentController(req: FastifyRequest, reply: Fast
                 return reply.status(500).send({message: 'Bad Request'})
         }
     }
-    return reply.status(201).send({message: 'User created'})
+    return reply.status(204).send()
 }

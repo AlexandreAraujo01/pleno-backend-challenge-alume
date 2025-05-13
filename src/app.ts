@@ -5,7 +5,7 @@ import { studentRoutes } from './infra/http/controllers/students/routes';
 import { fundingRoutes } from './infra/http/controllers/fundings/routes';
 
 const fastify = Fastify({
-  logger: true,
+  logger: false,
 });
 
 // JWT

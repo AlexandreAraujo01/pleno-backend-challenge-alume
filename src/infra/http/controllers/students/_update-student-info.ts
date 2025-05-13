@@ -5,6 +5,8 @@ import { PrismaStudentRepository } from "../../../repositories/prisma-user-repos
 import { PrismaClient } from "../../../../prisma/generated/prisma";
 import { UniqueEntityID } from "../../../../core/entites/unique-entity-id";
 import { StudentNotFoundError } from "../../../../domain/use-cases/errors/student-not-found";
+import { fundingPresenter } from "../../../presenters/funding-presenter";
+import { studentPresenter } from "../../../presenters/student-presenter";
 
 export const updateStudentInfoRequest = z.object({
      name: z.string().optional(),
@@ -39,6 +41,6 @@ export async function UpdateStudentInfoController(req: FastifyRequest, reply: Fa
                 return reply.status(500).send({message: 'Bad Request'})
         }
     }
-    return reply.status(204).send()
+    return reply.status(200).send(studentPresenter(response.value))
 
 }
